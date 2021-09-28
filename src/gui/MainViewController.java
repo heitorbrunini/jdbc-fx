@@ -1,11 +1,14 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
 
 public class MainViewController implements Initializable {
 	@FXML
@@ -17,7 +20,7 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemSobreAction() {
-		
+		System.out.println("onMenuItemSobreAction");
 	}
 	@FXML
 	public void onMenuItemDepartamentoAction() {
@@ -34,4 +37,13 @@ public class MainViewController implements Initializable {
 		
 	}
 	
+	private void loadView(String absoluteName) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+		try {
+			VBox newVbox =loader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	};
 }
