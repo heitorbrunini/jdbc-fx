@@ -19,6 +19,7 @@ public class Main extends Application {
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
 			mainScene = new Scene(scrollPane);
+			mainScene.getStylesheets().add("/application/application.css");
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Workshop Java");
 			primaryStage.show();
