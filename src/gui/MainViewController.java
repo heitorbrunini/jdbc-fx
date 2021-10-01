@@ -1,4 +1,4 @@
-package gui;
+ package gui;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.services.DepartmentService;
 
 public class MainViewController implements Initializable {
 	@FXML
@@ -58,6 +59,9 @@ public class MainViewController implements Initializable {
 			mainVbox.getChildren().add(mainMenu);
 			mainVbox.getChildren().addAll(newVbox.getChildren());
 			
+			DepartmentListController controlador = loader.getController();
+			controlador.setDepartmentService(new DepartmentService());
+			controlador.updateTableView();			
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Erro Carregando a tela", e.getMessage(),AlertType.ERROR );
 		}
