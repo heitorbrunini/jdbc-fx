@@ -47,6 +47,9 @@ public class DepartmentListController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initalizeNodes();
 		btNew.getStyleClass().add("button");
+		
+		setDepartmentService(new DepartmentService());
+		updateTableView();	
 	}
 	
 	private void initalizeNodes() {
