@@ -1,9 +1,10 @@
 package model.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -77,28 +78,129 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+				"DELETE FROM funcionarios WHERE Id = ?");
+			st.setInt(1, id);
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} 
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
+
 	@Override
 	public Funcionario findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+				"SELECT * FROM funcionarios WHERE Id = ?");
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				Funcionario obj = new Funcionario();
+				obj.setId(rs.getInt("Id"));
+				obj.setName(rs.getString("Name"));
+				obj.setEmail(rs.getString("Email"));
+				obj.setBaseSalary(rs.getDouble("BaseSalary"));
+				obj.setBirthDate(rs.getDate("BirthDate"));
+				
+				DepartmentDaoJDBC newdepartment = new DepartmentDaoJDBC(conn);
+				obj.setDepartment( newdepartment.findById(rs.getInt("DepartmentId")) );
+				
+				return obj;
+			}
+			return null;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 	@Override
 	public List<Funcionario> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+				"SELECT * FROM funcionarios ORDER BY Name");
+			
+			rs = st.executeQuery();
+			List<Funcionario> list = new ArrayList<>();
+			if (rs.next()) {
+				Funcionario obj = new Funcionario();
+				obj.setId(rs.getInt("Id"));
+				obj.setName(rs.getString("Name"));
+				obj.setEmail(rs.getString("Email"));
+				obj.setBaseSalary(rs.getDouble("BaseSalary"));
+				obj.setBirthDate(rs.getDate("BirthDate"));
+				
+				DepartmentDaoJDBC newdepartment = new DepartmentDaoJDBC(conn);
+				obj.setDepartment( newdepartment.findById(rs.getInt("DepartmentId")) );
+				
+				list.add(obj);
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+}
 
 	@Override
 	public List<Funcionario> findByDepartment(Department department) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+				"SELECT * FROM funcionarios WHERE DepartmentId = ?");
+			st.setInt(1, department.getId());
+			rs = st.executeQuery();
+			List<Funcionario> list = new ArrayList<>();
+			
+			if (rs.next()) {
+				Funcionario obj = new Funcionario();
+				obj.setId(rs.getInt("Id"));
+				obj.setName(rs.getString("Name"));
+				obj.setEmail(rs.getString("Email"));
+				obj.setBaseSalary(rs.getDouble("BaseSalary"));
+				obj.setBirthDate(rs.getDate("BirthDate"));
+				
+				DepartmentDaoJDBC newdepartment = new DepartmentDaoJDBC(conn);
+				obj.setDepartment( newdepartment.findById(rs.getInt("DepartmentId")) );
+				
+				list.add(obj);
+			}
+			
+			return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 	
+	/*toda vez que um funcionario for adicionado é preciso adicionar o salario dele
+	 * no balanco do departamento*/
 	private void addBalance(Department d, Double salary) {
 		PreparedStatement st = null;
 		try {
@@ -118,5 +220,4 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 			DB.closeStatement(st);
 		}
 	}
-
 }
