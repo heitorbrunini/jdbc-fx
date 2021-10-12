@@ -60,6 +60,7 @@ public class MainViewController implements Initializable {
 						
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Erro Carregando a tela", e.getMessage(),AlertType.ERROR );
+			e.printStackTrace();
 		}
 	};
 }
