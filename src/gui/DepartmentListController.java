@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -8,11 +9,15 @@ import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartmentService;
@@ -35,8 +40,9 @@ public class DepartmentListController implements Initializable{
 	private Button btNew;
 	
 	@FXML
-	public void onBtNweAction() {
-		System.out.println("acção");
+	public void onBtNweAction() throws IOException {
+		Stage stage = (Stage) Main.getMainScene().getWindow();
+		createDialogForm("/gui/departmentForm.fxml", stage);
 	}
 	
 	public void setDepartmentService(DepartmentService service) {
@@ -69,5 +75,22 @@ public class DepartmentListController implements Initializable{
 		List<Department> list = dept_service.findAll();
 		obslist = FXCollections.observableArrayList(list);
 		tableDepartment.setItems(obslist);
+	}
+	
+	public void createDialogForm(String absoluteName,Stage parentStage) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+		Pane pane = loader.load();
+		Stage dialogobox = new Stage();
+		//setar titulo da janela
+		dialogobox.setTitle("Criar Departamento");
+		//cria uma nova scena, pois é um novo palco
+		dialogobox.setScene(new Scene(pane));
+		//janela não responsiva 
+		dialogobox.setResizable(false);
+		//define o pai da nova scena
+		dialogobox.initOwner(parentStage);
+		//define a modalidade do diálogo (obrigatório)
+		dialogobox.initModality(Modality.WINDOW_MODAL);
+		dialogobox.showAndWait();
 	}
 }
