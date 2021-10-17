@@ -19,7 +19,6 @@ public class DepartmentDaoJDBC implements departmentDao {
 		this.conn=conn;
 	}
 	
-	
 	@Override
 	public void create(Department d) {
 		PreparedStatement st = null;
@@ -31,6 +30,7 @@ public class DepartmentDaoJDBC implements departmentDao {
 				"(?)"
 				);
 			st.setString(1, d.getName());
+			st.executeUpdate();	
 		}
 		catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -51,7 +51,7 @@ public class DepartmentDaoJDBC implements departmentDao {
 				"WHERE Id = ?");
 
 			st.setString(1, d.getName());
-			st.setInt(3, d.getId());
+			st.setInt(2, d.getId());
 			st.executeUpdate();
 		}
 		catch (SQLException e) {
@@ -116,7 +116,7 @@ public class DepartmentDaoJDBC implements departmentDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT * FROM department ORDER BY Name");
+				"SELECT * FROM department");
 			rs = st.executeQuery();
 
 			List<Department> list = new ArrayList<>();

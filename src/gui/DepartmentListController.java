@@ -25,6 +25,7 @@ import model.services.DepartmentService;
 public class DepartmentListController implements Initializable{
 
 	private DepartmentService dept_service;
+	
 	@FXML	
 	private TableView<Department> tableDepartment;
 	@FXML

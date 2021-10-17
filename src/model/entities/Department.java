@@ -13,6 +13,18 @@ public class Department implements Serializable {
 
 	public Department() {
 	}
+	
+	public Department(String name) {
+		this.id = -1;
+		this.name = name;
+		this.Balance= (double) 0;
+	}
+	
+	public Department(Integer id, String name) {
+		this.id = id;
+		this.name = name;
+		this.Balance = (double) 0;
+	}
 
 	public Department(Integer id, String name,Double Balance) {
 		this.id = id;
