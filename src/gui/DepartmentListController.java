@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.listeners.DataChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartmentService;
 
-public class DepartmentListController implements Initializable{
+public class DepartmentListController implements Initializable, DataChangeListener{
 
 	private DepartmentService dept_service;
 	
@@ -81,6 +82,11 @@ public class DepartmentListController implements Initializable{
 	public void createDialogForm(String absoluteName,Stage parentStage) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 		Pane pane = loader.load();
+		//aponta para o controlador dos formulários
+		DepartmentFormController controller = loader.getController();
+		//adiciona o metodo como listener para a lista de listeners
+		controller.subscripeDataChangeListener(this);
+		
 		Stage dialogobox = new Stage();
 		//setar titulo da janela
 		dialogobox.setTitle("Criar Departamento");
@@ -93,5 +99,10 @@ public class DepartmentListController implements Initializable{
 		//define a modalidade do diálogo (obrigatório)
 		dialogobox.initModality(Modality.WINDOW_MODAL);
 		dialogobox.showAndWait();
+	}
+
+	@Override
+	public void onDataChanged() {
+		updateTableView();		
 	}
 }

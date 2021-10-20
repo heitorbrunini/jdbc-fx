@@ -23,6 +23,7 @@ public class DepartmentDaoJDBC implements departmentDao {
 	public void create(Department d) {
 		PreparedStatement st = null;
 		try {
+			
 			st = conn.prepareStatement(
 				"INSERT INTO department " +
 				"(Name) " +
