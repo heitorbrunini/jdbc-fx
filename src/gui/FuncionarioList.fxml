@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="349.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DepartmentListController">
+<VBox prefHeight="349.0" prefWidth="504.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FuncionarioListController">
    <children>
       <Label text="Registro de Funcionários">
          <padding>
@@ -24,17 +24,18 @@
       </Label>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNweAction" text="Alterar" />
+          <Button fx:id="btOk" mnemonicParsing="false" onAction="#onbtOkAction" text="Alterar" />
+            <Button mnemonicParsing="false" text="🔍 Buscar" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableDepartment" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableFuncionarios" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="IdColumn" prefWidth="36.0" text="Id" />
           <TableColumn fx:id="NameColumn" prefWidth="99.0" text="Nome" />
-            <TableColumn fx:id="BalanceColumn" prefWidth="63.0" text="Salario" />
-            <TableColumn prefWidth="145.0" text="Email" />
-            <TableColumn prefWidth="86.0" text="Nascimento" />
-            <TableColumn prefWidth="38.0" text="Dp" />
+            <TableColumn fx:id="SalaryColumn" prefWidth="63.0" text="Salario" />
+            <TableColumn fx:id="EmailColumn" prefWidth="174.0" text="Email" />
+            <TableColumn fx:id="birthDateColumn" prefWidth="84.0" text="Nascimento" />
+            <TableColumn fx:id="IdDept" prefWidth="47.0" text="Dp" />
         </columns>
       </TableView>
    </children>

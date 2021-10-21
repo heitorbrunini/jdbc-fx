@@ -33,7 +33,7 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 			st.setString(1, func.getName());
 			st.setString(1, func.getEmail());
 			st.setDouble(1, func.getBaseSalary());
-			st.setInt(1, func.getDepartment().getId());
+			st.setInt(1, func.getDepartment());
 			st.executeUpdate();
 			
 			addBalance(func.getDepartment(),func.getBaseSalary());
@@ -111,9 +111,7 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 				obj.setEmail(rs.getString("Email"));
 				obj.setBaseSalary(rs.getDouble("BaseSalary"));
 				obj.setBirthDate(rs.getDate("BirthDate"));
-				
-				DepartmentDaoJDBC newdepartment = new DepartmentDaoJDBC(conn);
-				obj.setDepartment( newdepartment.findById(rs.getInt("DepartmentId")) );
+				obj.setDepartment( rs.getInt("DepartmentId") );
 				
 				return obj;
 			}
@@ -134,20 +132,18 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT * FROM funcionarios ORDER BY Name");
+				"SELECT * FROM funcionarios");
 			
 			rs = st.executeQuery();
 			List<Funcionario> list = new ArrayList<>();
-			if (rs.next()) {
+			while (rs.next()) {
 				Funcionario obj = new Funcionario();
 				obj.setId(rs.getInt("Id"));
 				obj.setName(rs.getString("Name"));
 				obj.setEmail(rs.getString("Email"));
 				obj.setBaseSalary(rs.getDouble("BaseSalary"));
 				obj.setBirthDate(rs.getDate("BirthDate"));
-				
-				DepartmentDaoJDBC newdepartment = new DepartmentDaoJDBC(conn);
-				obj.setDepartment( newdepartment.findById(rs.getInt("DepartmentId")) );
+				obj.setDepartment( rs.getInt("DepartmentId") );
 				
 				list.add(obj);
 			}
@@ -181,9 +177,7 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 				obj.setEmail(rs.getString("Email"));
 				obj.setBaseSalary(rs.getDouble("BaseSalary"));
 				obj.setBirthDate(rs.getDate("BirthDate"));
-				
-				DepartmentDaoJDBC newdepartment = new DepartmentDaoJDBC(conn);
-				obj.setDepartment( newdepartment.findById(rs.getInt("DepartmentId")) );
+				obj.setDepartment( rs.getInt("DepartmentId") );
 				
 				list.add(obj);
 			}
@@ -201,7 +195,7 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 	
 	/*toda vez que um funcionario for adicionado é preciso adicionar o salario dele
 	 * no balanco do departamento*/
-	private void addBalance(Department d, Double salary) {
+	private void addBalance(Integer integer, Double salary) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
@@ -209,7 +203,7 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 					"SET Balance = Balance + ?"+
 					"WHERE Id = ?");
 				st.setDouble(1, salary);
-				st.setInt(2, d.getId());
+				st.setInt(2, integer);
 				st.executeUpdate();
 		}
 		catch (SQLException e) {
