@@ -1,9 +1,9 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.sql.Date;
 
 public class Funcionario implements Serializable {
 
@@ -14,12 +14,13 @@ public class Funcionario implements Serializable {
 	private String email;
 	private Date birthDate;
 	private Double baseSalary;
-	private Department department;
+	private Integer department;
+	
 	
 	public Funcionario() {
 
 	}
-	public Funcionario(Integer id, String name,String email, Date birthDate, Double baseSalary,Department department) {
+	public Funcionario(Integer id, String name,String email, Date birthDate, Double baseSalary,Integer department) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -57,10 +58,10 @@ public class Funcionario implements Serializable {
 	public void setBaseSalary(Double baseSalary) {
 		this.baseSalary = baseSalary;
 	}
-	public Department getDepartment() {
+	public Integer getDepartment() {
 		return department;
 	}
-	public void setDepartment(Department department) {
+	public void setDepartment(Integer department) {
 		this.department = department;
 	};
 	public Date dateof(String data) throws ParseException {
