@@ -21,7 +21,7 @@ import model.services.DepartmentService;
 public class DepartmentFormController implements Initializable {
 	private DepartmentService dept_service = new DepartmentService();
 	private List<DataChangeListener> listeners = new ArrayList<>();
-	private Boolean New=false;
+	private int operation=0;
 	@FXML
 	private TextField textId;
 	@FXML
@@ -37,6 +37,8 @@ public class DepartmentFormController implements Initializable {
 	private RadioButton radio1;
 	@FXML
 	private RadioButton radio2;
+	@FXML
+	private RadioButton radio3;
 
 	// ação de salvar no banco
 	@FXML
@@ -44,22 +46,24 @@ public class DepartmentFormController implements Initializable {
 
 		try {
 			if (dept_service != null) {
-				if (New==false) {
+				if /*ATUALIZAR*/ (operation==1) {
 					//dept_service.update(new Department(Integer.parseInt(textId.getText()), textNome.getText()));
-					notifyDataChangeListeners();
-					Alerts.currentStage(event).close();
 					Alerts.showAlert("Confirmação", "Atualização", "Você Atualizou um departamento!",AlertType.INFORMATION);
-				} else if (New) {
+				} /*SALVAR*/ else if (operation==0) {
 					if (textNome.getText() == null || textNome.getText().isEmpty()) {
 						Labelerror.setText(" preencha o campo!");
 					} else {
 						// dept_service.create(new Department(textNome.getText()));
-						notifyDataChangeListeners();
-						Alerts.currentStage(event).close();
-						Alerts.showAlert("Confirmação", "Criação", "Você criou um novo departamento!",
-								AlertType.INFORMATION);
+						Alerts.showAlert("Confirmação", "Criação", "Você criou um novo departamento!",AlertType.INFORMATION);
 					}
+				} /*DELETAR*/ else if(operation==2) {
+					dept_service.delete(new Department(Integer.parseInt(textId.getText()), textNome.getText()));
+					Alerts.showAlert("Confirmação", "Deletar", "Você deletou um departamento!",AlertType.INFORMATION);
 				}
+				
+				notifyDataChangeListeners();
+				Alerts.currentStage(event).close();
+								
 			} else {
 				throw new IllegalStateException("falha ao tentar executar a operação");
 			}
@@ -85,17 +89,25 @@ public class DepartmentFormController implements Initializable {
 	public void subscripeDataChangeListener(DataChangeListener listener) {
 		listeners.add(listener);
 	}
-	//definir se o banco vai atualizar ou criar
+	//definir se o banco vai atualizar, criar ou deletar
 	public void onRadio1Action() {
 		textId.setEditable(false);
 		radio2.setSelected(false);		
-		this.New=true;
+		radio3.setSelected(false);
+		this.operation=0;
 	}
 
 	public void onRadio2Action() {
 		textId.setEditable(true);
 		radio1.setSelected(false);
-		this.New=false;
+		radio3.setSelected(false);
+		this.operation=1;
+	}
+	public void onRadio3Action() {
+		textId.setEditable(true);
+		radio1.setSelected(false);
+		radio2.setSelected(false);
+		this.operation=2;
 	}
 
 

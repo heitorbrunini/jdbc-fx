@@ -13,11 +13,11 @@
 
 <AnchorPane prefHeight="182.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DepartmentFormController">
    <children>
-      <GridPane prefHeight="131.0" prefWidth="351.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <GridPane prefHeight="131.0" prefWidth="406.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="68.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="10.0" prefWidth="158.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="127.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="55.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="10.0" prefWidth="179.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="170.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -49,10 +49,11 @@
                </padding>
             </HBox>
             <Label text="Operação" />
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="7.0" GridPane.columnIndex="1">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0" GridPane.columnIndex="1">
                <children>
                   <RadioButton fx:id="radio1" mnemonicParsing="false" onAction="#onRadio1Action" text="Criar" />
                   <RadioButton fx:id="radio2" mnemonicParsing="false" onAction="#onRadio2Action" text="Atualizar" />
+                  <RadioButton fx:id="radio3" mnemonicParsing="false" onAction="#onRadio3Action" text="Deletar" />
                </children>
                <padding>
                   <Insets top="7.0" />
