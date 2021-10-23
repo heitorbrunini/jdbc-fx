@@ -47,13 +47,13 @@ public class DepartmentFormController implements Initializable {
 		try {
 			if (dept_service != null) {
 				if /*ATUALIZAR*/ (operation==1) {
-					//dept_service.update(new Department(Integer.parseInt(textId.getText()), textNome.getText()));
+					dept_service.update(new Department(Integer.parseInt(textId.getText()), textNome.getText()));
 					Alerts.showAlert("Confirmação", "Atualização", "Você Atualizou um departamento!",AlertType.INFORMATION);
 				} /*SALVAR*/ else if (operation==0) {
 					if (textNome.getText() == null || textNome.getText().isEmpty()) {
 						Labelerror.setText(" preencha o campo!");
 					} else {
-						// dept_service.create(new Department(textNome.getText()));
+						 dept_service.create(new Department(textNome.getText()));
 						Alerts.showAlert("Confirmação", "Criação", "Você criou um novo departamento!",AlertType.INFORMATION);
 					}
 				} /*DELETAR*/ else if(operation==2) {
