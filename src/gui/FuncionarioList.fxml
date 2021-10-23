@@ -25,7 +25,7 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btOk" mnemonicParsing="false" onAction="#onbtOkAction" text="Alterar" />
-            <Button mnemonicParsing="false" text="🔍 Buscar" />
+            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onbtBuscarAction" text="🔍 Buscar" />
         </items>
       </ToolBar>
       <TableView fx:id="tableFuncionarios" prefHeight="200.0" prefWidth="200.0">

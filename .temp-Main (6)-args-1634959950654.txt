@@ -1,0 +1,10 @@
+--module-path
+/home/heitorbrunini/javalib/javafx-sdk-11.0.2/lib
+--add-modules
+javafx.controls,javafx.fxml
+-Dfile.encoding=Cp1252
+-p
+"C:\\javalib\\javafx-sdk-11.0.2\\lib\\javafx.base.jar;C:\\javalib\\javafx-sdk-11.0.2\\lib\\javafx.controls.jar;C:\\javalib\\javafx-sdk-11.0.2\\lib\\javafx.fxml.jar;C:\\javalib\\javafx-sdk-11.0.2\\lib\\javafx.graphics.jar;C:\\javalib\\javafx-sdk-11.0.2\\lib\\javafx.media.jar;C:\\javalib\\javafx-sdk-11.0.2\\lib\\javafx.swing.jar;C:\\javalib\\javafx-sdk-11.0.2\\lib\\javafx.web.jar;C:\\javalib\\javafx-sdk-11.0.2\\lib\\javafx-swt.jar;C:\\Program Files (x86)\\MySQL\\Connector J 8.0\\mysql-connector-java-8.0.26.jar"
+-classpath
+"D:\\CODE\\POO JAVA\\jdbc-fx\\bin;C:\\Users\\heito\\.p2\\pool\\plugins\\org.eclipse.fx.ide.css.jfx8_3.7.0.202010120832.jar"
+application.Main

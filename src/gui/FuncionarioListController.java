@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.List;
@@ -10,11 +11,15 @@ import gui.listeners.DataChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Funcionario;
 import model.services.FuncionarioService;
@@ -43,11 +48,13 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 	private ObservableList<Funcionario> obslist;
 	private FuncionarioService service = new FuncionarioService();	
 	
-	public void onbtOkAction() {
-		System.out.println("New");
+	public void onbtOkAction() throws IOException {
+		Stage stage = (Stage) Main.getMainScene().getWindow();
+		createDialogForm("/gui/funcionarioForm.fxml", stage);
 	}
-	public void onbtBuscarAction() {
-		System.out.println("Buscar");
+	public void onbtBuscarAction() throws IOException  {
+		Stage stage = (Stage) Main.getMainScene().getWindow();
+		createDialogForm("/gui/funcionarioFind.fxml", stage);
 	}
 	private void initalizeNodes() {
 		IdColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
@@ -71,15 +78,33 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 	}
 	@Override
 	public void onDataChanged() {
-		// TODO Auto-generated method stub
-		
+		updateTableView();			
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initalizeNodes();		
 	}
-	
+	public void createDialogForm(String absoluteName,Stage parentStage) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+		Pane pane = loader.load();
+		//aponta para o controlador dos formulários
+		FuncionarioFormController controller = loader.getController();
+		//adiciona o metodo como listener para a lista de listeners
+		controller.subscripeDataChangeListener(this);		
+		Stage dialogobox = new Stage();
+		//setar titulo da janela
+		dialogobox.setTitle("Buscar Funcionario");
+		//cria uma nova scena, pois é um novo palco
+		dialogobox.setScene(new Scene(pane));
+		//janela não responsiva 
+		dialogobox.setResizable(false);
+		//define o pai da nova scena
+		dialogobox.initOwner(parentStage);
+		//define a modalidade do diálogo (obrigatório)
+		dialogobox.initModality(Modality.WINDOW_MODAL);
+		dialogobox.showAndWait();
+	}
 	
 	
 	
