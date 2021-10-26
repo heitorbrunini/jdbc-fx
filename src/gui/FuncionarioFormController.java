@@ -56,8 +56,7 @@ public class FuncionarioFormController implements Initializable {
 				if /* ATUALIZAR */ (operation == 1) {
 					Funcionario f = makeUpdateFunc(service.findbyid(Integer.parseInt(textId.getText())), campo.getSelectionModel().getSelectedItem(), textNome);
 					service.update(f, campo.getSelectionModel().getSelectedItem());
-					Alerts.showAlert("Confirmação", "Atualização", "Você Atualizou um funcionário!",
-							AlertType.INFORMATION);
+					Alerts.showAlert("Confirmação", "Atualização", "Você Atualizou um funcionário!",AlertType.INFORMATION);
 				} /* DELETAR */ else if (operation == 2) {
 					service.delete(Integer.parseInt(textId.getText()));
 					Alerts.showAlert("Confirmação", "Deletar", "Você deletou um funcionário!", AlertType.INFORMATION);
@@ -94,7 +93,7 @@ public class FuncionarioFormController implements Initializable {
 	public void subscripeDataChangeListener(DataChangeListener listener) {
 		listeners.add(listener);
 	}
-
+	
 	// definir se o banco vai atualizar, criar ou deletar
 	public void onRadio2Action() {
 		mensagem.setVisible(true);
