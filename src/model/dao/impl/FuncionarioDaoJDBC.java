@@ -84,6 +84,8 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 			st = conn.prepareStatement("DELETE FROM funcionarios WHERE Id = ?");
 			st.setInt(1, id);
 			st.executeUpdate();
+			Funcionario f = findById(id);
+			subBalance(f.getDepartment(),f.getBaseSalary());
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
@@ -110,8 +112,9 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 				obj.setDepartment(rs.getInt("DepartmentId"));
 
 				return obj;
+			}else {
+				throw new DbException("Id não encontrado");
 			}
-			return null;
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
@@ -171,7 +174,9 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 
 				list.add(obj);
 			}
-			System.out.println(list.size());
+			if (list.size()==0){
+				throw new DbException("Nenhum funcionario encontrado no departamento");
+			}
 			return list;
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -189,6 +194,20 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE department " + "SET Balance = Balance + ?" + "WHERE Id = ?");
+			st.setDouble(1, salary);
+			st.setInt(2, integer);
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
+	}
+	private void subBalance(Integer integer, Double salary) {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("UPDATE department " + "SET Balance = Balance - ?" + "WHERE Id = ?");
 			st.setDouble(1, salary);
 			st.setInt(2, integer);
 			st.executeUpdate();

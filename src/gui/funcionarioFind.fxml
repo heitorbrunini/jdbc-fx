@@ -39,7 +39,7 @@
                         <Insets top="5.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="textNome" prefHeight="25.0" prefWidth="122.0" />
+                  <TextField fx:id="textNome" editable="false" prefHeight="25.0" prefWidth="122.0" />
                </children>
             </HBox>
             <RadioButton fx:id="bydepartment" mnemonicParsing="false" onAction="#onRadioBydepartmentAction" text="Departamento" GridPane.columnIndex="1" />
@@ -51,13 +51,14 @@
                         <Insets right="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="textId" prefHeight="25.0" prefWidth="123.0" />
+                  <TextField fx:id="textId" editable="false" prefHeight="25.0" prefWidth="123.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="3">
                <children>
                   <Button fx:id="find" mnemonicParsing="false" onAction="#onBtFindAction" text="Buscar" />
-                  <Button mnemonicParsing="false" text="Cancelar" />
+                  <Button fx:id="cancel" mnemonicParsing="false" onAction="#onCancelbtAction" text="Cancelar" />
+                  <Button fx:id="findAll" mnemonicParsing="false" onAction="#onFindAllBt" text="Desfazer" />
                </children>
             </HBox>
          </children>
