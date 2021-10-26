@@ -10,7 +10,6 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import model.dao.funcionarioDao;
-import model.entities.Department;
 import model.entities.Funcionario;
 
 public class FuncionarioDaoJDBC implements funcionarioDao {
@@ -151,17 +150,17 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 	}
 
 	@Override
-	public List<Funcionario> findByDepartment(Department department) {
+	public List<Funcionario> findByDepartment(Integer department) {
 
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement("SELECT * FROM funcionarios WHERE DepartmentId = ?");
-			st.setInt(1, department.getId());
+			st.setInt(1, department);
 			rs = st.executeQuery();
 			List<Funcionario> list = new ArrayList<>();
-
-			if (rs.next()) {
+			
+			while (rs.next()) {
 				Funcionario obj = new Funcionario();
 				obj.setId(rs.getInt("Id"));
 				obj.setName(rs.getString("Name"));
@@ -172,7 +171,7 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 
 				list.add(obj);
 			}
-
+			System.out.println(list.size());
 			return list;
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());

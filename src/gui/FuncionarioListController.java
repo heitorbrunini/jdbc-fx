@@ -50,23 +50,20 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 	
 	public void onbtOkAction() throws IOException {
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		createDialogForm("/gui/funcionarioForm.fxml", stage);
+		createDialogForm("/gui/funcionarioForm.fxml", stage,true);
 	}
 	public void onbtBuscarAction() throws IOException  {
+		//.FuncionarioFormFindController cannot be cast to class gui.FuncionarioFormController
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		createDialogForm("/gui/funcionarioFind.fxml", stage);
+		createDialogForm("/gui/funcionarioFind.fxml", stage,false);
 	}
 	private void initalizeNodes() {
-		IdColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
-		IdDept.setCellValueFactory(new PropertyValueFactory<>("department"));
-		EmailColumn.setCellValueFactory(new PropertyValueFactory<>("Email"));
-		NameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
-		birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("BirthDate"));
-		SalaryColumn.setCellValueFactory(new PropertyValueFactory<>("BaseSalary"));
+		initializeComboBox();
 		updateTableView();
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableFuncionarios.prefHeightProperty().bind(stage.heightProperty());
 	}
+	// Metodos para tabela de funcionarios
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("servico nulo");
@@ -76,22 +73,20 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 		obslist = FXCollections.observableArrayList(list);
 		tableFuncionarios.setItems(obslist);
 	}
-	@Override
-	public void onDataChanged() {
-		updateTableView();			
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		initalizeNodes();		
-	}
-	public void createDialogForm(String absoluteName,Stage parentStage) throws IOException {
+	
+	//criar formulario para funcionario	
+	public void createDialogForm(String absoluteName,Stage parentStage, Boolean type) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 		Pane pane = loader.load();
 		//aponta para o controlador dos formulários
-		FuncionarioFormController controller = loader.getController();
 		//adiciona o metodo como listener para a lista de listeners
-		controller.subscripeDataChangeListener(this);		
+		if (type) {
+			FuncionarioFormController controller = loader.getController();
+			controller.subscripeDataChangeListener(this);
+		}else {
+			FuncionarioFormFindController controller = loader.getController();
+			controller.subscripeDataChangeListener(this);
+		};		
 		Stage dialogobox = new Stage();
 		//setar titulo da janela
 		dialogobox.setTitle("Buscar Funcionario");
@@ -106,7 +101,31 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 		dialogobox.showAndWait();
 	}
 	
+	public void initializeComboBox() {
+		IdColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
+		IdDept.setCellValueFactory(new PropertyValueFactory<>("department"));
+		EmailColumn.setCellValueFactory(new PropertyValueFactory<>("Email"));
+		NameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
+		birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("BirthDate"));
+		SalaryColumn.setCellValueFactory(new PropertyValueFactory<>("BaseSalary"));
+	}
 	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		initalizeNodes();
+	}
+	@Override
+	public void onDataChanged() {
+		updateTableView();			
+	}
+	@Override
+	public void onDataFind(List<Funcionario> funcionarios) {
+		if (service == null) {
+			throw new IllegalStateException("servico nulo");
+		}
+		obslist = FXCollections.observableArrayList(funcionarios);
+		tableFuncionarios.setItems(obslist);
+	}
 	
-	
+		
 }

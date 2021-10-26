@@ -22,5 +22,7 @@ public class FuncionarioService {
 	public Funcionario findbyid(Integer id) {
 		return dao.findById(id);
 	}
-	
+	public List<Funcionario> findbyDp(Integer dp) {
+		return dao.findByDepartment(dp);
+	}
 }

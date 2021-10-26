@@ -2,7 +2,6 @@ package model.dao;
 
 import java.util.List;
 
-import model.entities.Department;
 import model.entities.Funcionario;
 
 public interface funcionarioDao {
@@ -11,5 +10,5 @@ public interface funcionarioDao {
 	void deleteById(Integer id);
 	Funcionario findById(Integer id);
 	List<Funcionario> findAll();
-	List<Funcionario> findByDepartment(Department department);
+	List<Funcionario> findByDepartment(Integer department);
 }

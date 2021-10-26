@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Department;
+import model.entities.Funcionario;
 import model.services.DepartmentService;
 
 public class DepartmentListController implements Initializable, DataChangeListener{
@@ -104,5 +105,10 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	@Override
 	public void onDataChanged() {
 		updateTableView();		
+	}
+
+	@Override
+	public void onDataFind(List<Funcionario> funcionarios) {
+		// TODO Auto-generated method stub
 	}
 }
