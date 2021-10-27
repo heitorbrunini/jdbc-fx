@@ -44,18 +44,23 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 	private Button btOk;
 	@FXML
 	private Button btBuscar;
+	@FXML
+	private Button btCreate;
 	
 	private ObservableList<Funcionario> obslist;
 	private FuncionarioService service = new FuncionarioService();	
 	
 	public void onbtOkAction() throws IOException {
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		createDialogForm("/gui/funcionarioForm.fxml", stage,true);
+		createDialogForm("/gui/funcionarioForm.fxml", stage,"FuncionarioFormController");
 	}
 	public void onbtBuscarAction() throws IOException  {
-		//.FuncionarioFormFindController cannot be cast to class gui.FuncionarioFormController
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		createDialogForm("/gui/funcionarioFind.fxml", stage,false);
+		createDialogForm("/gui/funcionarioFind.fxml", stage,"FuncionarioFormFindController");
+	}
+	public void onbtCreateAction() throws IOException  {
+		Stage stage = (Stage) Main.getMainScene().getWindow();
+		createDialogForm("/gui/funcionarioCreateForm.fxml", stage,"FuncionarioFormCreateController");
 	}
 	private void initalizeNodes() {
 		initializeComboBox();
@@ -75,15 +80,15 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 	}
 	
 	//criar formulario para funcionario	
-	public void createDialogForm(String absoluteName,Stage parentStage, Boolean type) throws IOException {
+	public void createDialogForm(String absoluteName,Stage parentStage, String type) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 		Pane pane = loader.load();
 		//aponta para o controlador dos formulários
 		//adiciona o metodo como listener para a lista de listeners
-		if (type) {
+		if (type=="FuncionarioFormController") {
 			FuncionarioFormController controller = loader.getController();
 			controller.subscripeDataChangeListener(this);
-		}else {
+		}else if(type=="FuncionarioFormFindController") {
 			FuncionarioFormFindController controller = loader.getController();
 			controller.subscripeDataChangeListener(this);
 		};		

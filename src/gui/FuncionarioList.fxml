@@ -25,8 +25,8 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btOk" mnemonicParsing="false" onAction="#onbtOkAction" text="Alterar" />
-            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onbtBuscarAction" text="🔍 Buscar" />
-            <Button mnemonicParsing="false" onAction="#updateTableView" text="Desfazer Busca" visible="false" />
+            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onbtBuscarAction" text="Buscar" />
+            <Button fx:id="btCreate" mnemonicParsing="false" onAction="#onbtCreateAction" text="Cadastrar" />
         </items>
       </ToolBar>
       <TableView fx:id="tableFuncionarios" prefHeight="200.0" prefWidth="200.0">

@@ -20,11 +20,10 @@ public class Funcionario implements Serializable {
 	public Funcionario() {
 
 	}
-	public Funcionario(Integer id, String name,String email, Date birthDate, Double baseSalary,Integer department) {
-		this.id = id;
+	public Funcionario(String name,String email, Date birthDate, Double baseSalary,Integer department) throws ParseException {
 		this.name = name;
 		this.email = email;
-		this.birthDate = birthDate;
+		this.birthDate =birthDate;
 		this.baseSalary = baseSalary;
 		this.department = department;
 	}
@@ -64,7 +63,7 @@ public class Funcionario implements Serializable {
 	public void setDepartment(Integer department) {
 		this.department = department;
 	};
-	public Date dateof(String data) throws ParseException {
+	public static Date dateof(String data) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return new java.sql.Date(sdf.parse(data).getTime());
 	}
