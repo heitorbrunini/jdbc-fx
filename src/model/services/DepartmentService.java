@@ -25,4 +25,7 @@ public class DepartmentService {
 	public void delete(Department d) {
 		dao.deleteById(d.getId());
 	}
+	public Department findbyId(Integer I) {
+		return dao.findById(I);
+	}
 }
