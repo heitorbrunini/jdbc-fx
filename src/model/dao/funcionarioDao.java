@@ -6,7 +6,7 @@ import model.entities.Funcionario;
 
 public interface funcionarioDao {
 	void create(Funcionario func);
-	public void update(Funcionario func, String Operator);
+	void update(Funcionario func,Funcionario old, String Operator);
 	void deleteById(Integer id);
 	Funcionario findById(Integer id);
 	List<Funcionario> findAll();

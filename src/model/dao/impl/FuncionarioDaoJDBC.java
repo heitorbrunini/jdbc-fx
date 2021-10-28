@@ -27,9 +27,10 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 			st = conn.prepareStatement("INSERT INTO funcionarios "
 					+ "(Name, Email, BirthDate, BaseSalary, DepartmentId) VALUES " + "(?,?,?,?,?)");
 			st.setString(1, func.getName());
-			st.setString(1, func.getEmail());
-			st.setDouble(1, func.getBaseSalary());
-			st.setInt(1, func.getDepartment());
+			st.setString(2, func.getEmail());
+			st.setDate(3, func.getBirthDate());
+			st.setDouble(4, func.getBaseSalary());
+			st.setInt(5, func.getDepartment());
 			st.executeUpdate();
 
 			addBalance(func.getDepartment(), func.getBaseSalary());
@@ -43,7 +44,7 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 	}
 
 	@Override
-	public void update(Funcionario func, String Operator) {
+	public void update(Funcionario func,Funcionario old, String Operator) {
 		PreparedStatement st = null;
 		try {
 			if (Operator=="email") {
@@ -52,6 +53,8 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 				st.setInt(2, func.getId());
 			}
 			else if(Operator=="baseSalary") {
+				subBalance(func.getDepartment(), old.getBaseSalary());
+				addBalance(func.getDepartment(), func.getBaseSalary());
 				st = conn.prepareStatement("UPDATE `fx-jdbc`.`funcionarios` SET `BaseSalary` = ? WHERE (`Id` = ?)");
 				st.setDouble(1, func.getBaseSalary());
 				st.setInt(2, func.getId());				
@@ -60,6 +63,8 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 				st.setString(1, func.getName());
 				st.setInt(2, func.getId());				
 			}else if(Operator=="department") {
+				subBalance(old.getDepartment(), old.getBaseSalary());
+				addBalance(func.getDepartment(), func.getBaseSalary());
 				st = conn.prepareStatement("UPDATE `fx-jdbc`.`funcionarios` SET `DepartmentId` = ? WHERE (`Id` = ?)");
 				st.setInt(1, func.getDepartment());
 				st.setInt(2, func.getId());				
@@ -81,10 +86,10 @@ public class FuncionarioDaoJDBC implements funcionarioDao {
 	public void deleteById(Integer id) {
 		PreparedStatement st = null;
 		try {
+			Funcionario f = findById(id);
 			st = conn.prepareStatement("DELETE FROM funcionarios WHERE Id = ?");
 			st.setInt(1, id);
 			st.executeUpdate();
-			Funcionario f = findById(id);
 			subBalance(f.getDepartment(),f.getBaseSalary());
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());

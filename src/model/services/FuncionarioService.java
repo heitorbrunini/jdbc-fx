@@ -13,8 +13,8 @@ public class FuncionarioService {
 	public void create(Funcionario f) {
 		dao.create(f);
 	}
-	public void update(Funcionario f, String Operation) {
-		dao.update(f, Operation);
+	public void update(Funcionario func,Funcionario old, String Operator){
+		dao.update(func,old, Operator);
 	}
 	public void delete(Integer id) {
 		dao.deleteById(id);

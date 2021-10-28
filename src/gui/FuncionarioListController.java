@@ -83,18 +83,26 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 	public void createDialogForm(String absoluteName,Stage parentStage, String type) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 		Pane pane = loader.load();
+		Stage dialogobox = new Stage();
 		//aponta para o controlador dos formulários
 		//adiciona o metodo como listener para a lista de listeners
 		if (type=="FuncionarioFormController") {
+			//setar titulo da janela
+			dialogobox.setTitle("Alterar Funcionario");
 			FuncionarioFormController controller = loader.getController();
 			controller.subscripeDataChangeListener(this);
 		}else if(type=="FuncionarioFormFindController") {
+			//setar titulo da janela
+			dialogobox.setTitle("Buscar Funcionario");
 			FuncionarioFormFindController controller = loader.getController();
 			controller.subscripeDataChangeListener(this);
+		}else if(type=="FuncionarioFormCreateController") {
+			//setar titulo da janela
+			dialogobox.setTitle("Cadastrar Funcionario");
+			FuncionarioFormCreate controller = loader.getController();
+			controller.subscripeDataChangeListener(this);
 		};		
-		Stage dialogobox = new Stage();
-		//setar titulo da janela
-		dialogobox.setTitle("Buscar Funcionario");
+				
 		//cria uma nova scena, pois é um novo palco
 		dialogobox.setScene(new Scene(pane));
 		//janela não responsiva 

@@ -55,7 +55,7 @@ public class FuncionarioFormController implements Initializable {
 			if (service != null) {
 				if /* ATUALIZAR */ (operation == 1) {
 					Funcionario f = makeUpdateFunc(service.findbyid(Integer.parseInt(textId.getText())), campo.getSelectionModel().getSelectedItem(), textNome);
-					service.update(f, campo.getSelectionModel().getSelectedItem());
+					service.update(f,service.findbyid(Integer.parseInt(textId.getText())), campo.getSelectionModel().getSelectedItem());
 					Alerts.showAlert("Confirmação", "Atualização", "Você Atualizou um funcionário!",AlertType.INFORMATION);
 				} /* DELETAR */ else if (operation == 2) {
 					service.delete(Integer.parseInt(textId.getText()));

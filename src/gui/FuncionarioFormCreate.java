@@ -6,7 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import db.DbException;
+import gui.listeners.DataChangeListener;
+import gui.util.Alerts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,11 +16,14 @@ import javafx.scene.control.TextField;
 import model.entities.Department;
 import model.entities.Funcionario;
 import model.services.DepartmentService;
+import model.services.FuncionarioService;
 
 public class FuncionarioFormCreate {
 	private DepartmentService service = new DepartmentService();
+	private FuncionarioService fservice = new FuncionarioService();
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private List<Label> erros = new ArrayList<>();
+	private List<DataChangeListener> listeners = new ArrayList<>();
 	
 	@FXML
 	private TextField textNome;
@@ -49,7 +53,15 @@ public class FuncionarioFormCreate {
 	public void onBtSaveAction(ActionEvent event) throws ParseException {
 		resetList();
 		Funcionario novo = new Funcionario(getName(), getMail(), getDate(), getSalary(), getDepartment());
-		checkAll();
+		if(checkAll()) {
+			fservice.create(novo);
+			notifyDataChangeListeners();
+			Alerts.currentStage(event).close();
+		}		
+	}
+	
+	public void onBtcancel(ActionEvent event) {
+		Alerts.currentStage(event).close();
 	}
 
 	public Integer getDepartment() {
@@ -106,9 +118,9 @@ public class FuncionarioFormCreate {
 			for (Label erro : erros) {
 				erro.setVisible(true);
 			}
-			return true;
-		} else {
 			return false;
+		} else {
+			return true;
 		}
 	}
 	
@@ -118,5 +130,16 @@ public class FuncionarioFormCreate {
 		}
 		erros.removeAll(erros);
 	}
+	
+	private void notifyDataChangeListeners() {
+		for (DataChangeListener listener : listeners) {
+			listener.onDataChanged();
+		}
+	}
+	
+	public void subscripeDataChangeListener(DataChangeListener listener) {
+		listeners.add(listener);
+	}
+
 
 }
