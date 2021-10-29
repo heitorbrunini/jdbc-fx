@@ -37,7 +37,6 @@ public class MainViewController implements Initializable {
 	public void onMenuItemFuncionarioAction() {
 		loadView("/gui/FuncionarioList.fxml");
 	}
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
