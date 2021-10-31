@@ -8,7 +8,7 @@
   <h4>
 <h3>➡ Banco de Dados<h3>
   <h4>
-    * Há um Arquivo "jdbc-fx.sql" , nele há a criação das tabelas e funcionários, rode o arquivo em seu MySql WorkBench.
+    * Há um Arquivo "jdbc-fx.sql" , nele há a criação das tabelas e funcionários, rode o arquivo em seu MySql WorkBench.<br>
     * No arquivo db.properties edite nome e senha para o acesso do seu Banco de dados
   <h4>
 <h3>:books: O que aprendi<h3>
